@@ -32,7 +32,7 @@ const mediaArray = [
 ];
 
 const App = () => {
-  return <MediaTable />;
+  return <MediaTable mediaArray={mediaArray} />;
 };
 
 export default App;

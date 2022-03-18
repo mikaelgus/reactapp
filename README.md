@@ -9,7 +9,7 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [https://users.metropolia.fi/~mikaelgu/medpal/react/week1/](https://users.metropolia.fi/~mikaelgu/medpal/react/week1/) to view it in your browser.
+Open [https://users.metropolia.fi/~mikaelgu/medpal/react/week1b/](https://users.metropolia.fi/~mikaelgu/medpal/react/week1b/) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.

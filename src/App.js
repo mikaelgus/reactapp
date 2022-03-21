@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
 import Nav from './components/Nav';
@@ -7,7 +8,7 @@ import Single from './views/Single';
 
 const App = () => {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />

@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useForm from '../hooks/FormHooks';
 import {userLogin, useUser} from '../hooks/ApiHooks';
+import {Navigate, useNavigate} from 'react-router-dom';
 
 const LoginForm = (props) => {
   const alkuarvot = {
@@ -12,9 +13,18 @@ const LoginForm = (props) => {
 
   const {postLogin} = userLogin();
 
-  const doLogin = () => {
+  const navigate = useNavigate();
+
+  const doLogin = async () => {
     console.log('doLogin');
-    postLogin(inputs);
+    try {
+      const userData = await postLogin(inputs);
+      console.log(userData);
+      localStorage.setItem('token', userData.token);
+      navigate('/home');
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   const {inputs, handleInputChange, handleSubmit} = useForm(doLogin, alkuarvot);

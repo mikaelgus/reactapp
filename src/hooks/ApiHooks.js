@@ -49,9 +49,7 @@ const useUser = () => {
       },
       body: JSON.stringify(inputs),
     };
-    const json = await fetchJson(baseUrl + 'users', fetchOptions);
-
-    console.log(json);
+    return await fetchJson(baseUrl + 'users', fetchOptions);
   };
 
   return {getUser, postUser};
@@ -66,9 +64,7 @@ const userLogin = () => {
       },
       body: JSON.stringify(inputs),
     };
-    const json = await fetchJson(baseUrl + 'login', fetchOptions);
-
-    console.log(json);
+    return await fetchJson(baseUrl + 'login', fetchOptions);
   };
 
   return {postLogin};

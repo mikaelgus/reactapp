@@ -14,9 +14,14 @@ const RegisterForm = (props) => {
 
   const {postUser} = useUser();
 
-  const doRegister = () => {
+  const doRegister = async () => {
     console.log('doRegister');
-    postUser(inputs);
+    try {
+      const userData = await postUser(inputs);
+      console.log(userData);
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   const {inputs, handleInputChange, handleSubmit} = useForm(

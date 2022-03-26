@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useForm from '../hooks/FormHooks';
 import {useUser} from '../hooks/ApiHooks';
+import {Button, TextField} from '@mui/material';
 
 const RegisterForm = (props) => {
   const startingValues = {
@@ -33,35 +34,41 @@ const RegisterForm = (props) => {
     <>
       <div>Register</div>
       <form onSubmit={handleSubmit}>
-        <input
+        <TextField
+          id="outlined-basic"
           placeholder="username"
           type="text"
           name="username"
           onChange={handleInputChange}
           value={inputs.username}
         />
-        <input
+        <TextField
+          id="outlined-basic"
           placeholder="password"
           type="password"
           name="password"
           onChange={handleInputChange}
           value={inputs.password}
         />
-        <input
+        <TextField
+          id="outlined-basic"
           placeholder="email"
           type="email"
           name="email"
           onChange={handleInputChange}
           value={inputs.email}
         />
-        <input
+        <TextField
+          id="outlined-basic"
           placeholder="full name"
           type="text"
           name="full_name"
           onChange={handleInputChange}
           value={inputs.full_name}
         />
-        <input type="submit" value="register" />
+        <Button variant="contained" type="submit" value="register">
+          REGISTER
+        </Button>
       </form>
     </>
   );

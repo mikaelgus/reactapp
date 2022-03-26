@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import {Container} from '@mui/material';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
 import Nav from './components/Nav';
@@ -10,13 +11,15 @@ import Single from './views/Single';
 const App = () => {
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <Nav />
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/single" element={<Single />} />
-      </Routes>
+      <Container>
+        <Nav />
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/single" element={<Single />} />
+        </Routes>
+      </Container>
     </Router>
   );
 };

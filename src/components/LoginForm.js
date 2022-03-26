@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import useForm from '../hooks/FormHooks';
 import {userLogin, useUser} from '../hooks/ApiHooks';
 import {Navigate, useNavigate} from 'react-router-dom';
+import {Button, TextField} from '@mui/material';
 
 const LoginForm = (props) => {
   const alkuarvot = {
@@ -33,20 +34,24 @@ const LoginForm = (props) => {
     <>
       <div>Login</div>
       <form onSubmit={handleSubmit}>
-        <input
+        <TextField
+          id="outlined-basic"
           placeholder="username"
           name="username"
           onChange={handleInputChange}
           value={inputs.username}
         />
-        <input
+        <TextField
+          id="outlined-basic"
           placeholder="password"
           name="password"
           type="password"
           onChange={handleInputChange}
           value={inputs.password}
         />
-        <input type="submit" value="login" />
+        <Button variant="contained" color="success" type="submit" value="login">
+          LOGIN
+        </Button>
       </form>
     </>
   );

@@ -13,7 +13,7 @@ const Nav = () => {
       const userData = await getUser(localStorage.getItem('token'));
       console.log(userData);
       setUser(userData);
-      navigate('/home');
+      // navigate('/home');
     } catch (err) {
       setUser(null);
       navigate('/');

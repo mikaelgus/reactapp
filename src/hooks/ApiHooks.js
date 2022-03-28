@@ -85,4 +85,16 @@ const userLogin = () => {
   return {postLogin};
 };
 
-export {useMedia, useUser, userLogin};
+const useTag = () => {
+  const getTag = async (tag) => {
+    const tagResult = await fetchJson(baseUrl + 'tags/' + tag);
+    if (tagResult.lenght > 0) {
+      return tagResult;
+    } else {
+      throw new Error('No tags');
+    }
+  };
+  return {getTag};
+};
+
+export {useMedia, useUser, userLogin, useTag};

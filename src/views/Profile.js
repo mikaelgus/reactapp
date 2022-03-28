@@ -1,24 +1,37 @@
-import {useEffect, useState} from 'react';
-import {useUser} from '../hooks/ApiHooks';
+import {useContext, useEffect, useState} from 'react';
+import {MediaContext} from '../contexts/MediaContext';
+import {useTag} from '../hooks/ApiHooks';
+import {mediaUrl} from '../utils/variables';
 
 const Profile = () => {
-  const [user, setUser] = useState({});
-  const {getUser} = useUser();
-  const fetchUser = async () => {
-    const userData = await getUser(localStorage.getItem('token'));
-    setUser(userData);
+  const [user] = useContext(MediaContext);
+  const [avatar, setAvatar] = useState({
+    filename: 'https://placekitten.com/320',
+  });
+  const {getTag} = useTag();
+  const fetchAvatar = async () => {
+    if (user) {
+      const avatars = await getTag('avatar_' + user.user_id);
+      const ava = avatars.pop();
+      ava.filename = mediaUrl + ava.filename;
+      setAvatar(ava);
+    }
   };
-
   useEffect(() => {
-    fetchUser();
-  }, []);
+    fetchAvatar();
+  }, [user]);
 
   return (
     <>
       <h1>Profile</h1>
-      <p>{user.username}</p>
-      <p>{user.email}</p>
-      <p>{user.full_name}</p>
+      {user && (
+        <>
+          <img src={avatar.filename} alt={user.username} />
+          <p>{user.username}</p>
+          <p>{user.email}</p>
+          <p>{user.full_name}</p>
+        </>
+      )}
     </>
   );
 };

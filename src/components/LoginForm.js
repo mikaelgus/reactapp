@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import useForm from '../hooks/FormHooks';
 import {userLogin, useUser} from '../hooks/ApiHooks';
 import {Navigate, useNavigate} from 'react-router-dom';
 import {Button, TextField} from '@mui/material';
+import {MediaContext} from '../contexts/MediaContext';
 
 const LoginForm = (props) => {
+  const [user, setUser] = useContext(MediaContext);
   const alkuarvot = {
     username: '',
     password: '',
@@ -20,8 +22,8 @@ const LoginForm = (props) => {
     console.log('doLogin');
     try {
       const userData = await postLogin(inputs);
-      console.log(userData);
       localStorage.setItem('token', userData.token);
+      setUser(userData.user);
       navigate('/home');
     } catch (err) {
       alert(err.message);

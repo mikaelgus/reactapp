@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useForm from '../hooks/FormHooks';
-import {useUser} from '../hooks/ApiHooks';
+import {getUsername, useUser} from '../hooks/ApiHooks';
 import {Button, TextField} from '@mui/material';
 
 const RegisterForm = (props) => {
@@ -13,13 +13,16 @@ const RegisterForm = (props) => {
     full_name: '',
   };
 
-  const {postUser} = useUser();
+  const {postUser, getUsername} = useUser();
 
   const doRegister = async () => {
     console.log('doRegister');
     try {
-      const userData = await postUser(inputs);
-      console.log(userData);
+      const checkUser = await getUsername(inputs.username);
+      if (checkUser) {
+        const userData = await postUser(inputs);
+        console.log(userData);
+      }
     } catch (err) {
       alert(err.message);
     }

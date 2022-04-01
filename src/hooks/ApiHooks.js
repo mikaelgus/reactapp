@@ -1,3 +1,4 @@
+// TODO: add necessary imports
 import {useEffect, useState} from 'react';
 import {baseUrl} from '../utils/variables';
 
@@ -8,7 +9,7 @@ const fetchJson = async (url, options = {}) => {
     if (response.ok) {
       return json;
     } else {
-      const message = json.error;
+      const message = json.message;
       throw new Error(message);
     }
   } catch (err) {
@@ -20,7 +21,7 @@ const useMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
   const getMedia = async () => {
     try {
-      const media = await await fetchJson(baseUrl + 'media');
+      const media = await fetchJson(baseUrl + 'media');
       const allFiles = await Promise.all(
         media.map(async (file) => {
           return await fetchJson(`${baseUrl}media/${file.file_id}`);
@@ -28,13 +29,14 @@ const useMedia = () => {
       );
       setMediaArray(allFiles);
     } catch (err) {
-      console.log(err.message);
-      alert('database error');
+      alert(err.message);
     }
   };
+
   useEffect(() => {
     getMedia();
   }, []);
+
   return {mediaArray};
 };
 
@@ -47,6 +49,7 @@ const useUser = () => {
     };
     return await fetchJson(baseUrl + 'users/user', fetchOptions);
   };
+
   const getUsername = async (username) => {
     const checkUser = await fetchJson(baseUrl + 'users/username/' + username);
     if (checkUser.available) {
@@ -70,7 +73,7 @@ const useUser = () => {
   return {getUser, postUser, getUsername};
 };
 
-const userLogin = () => {
+const useLogin = () => {
   const postLogin = async (inputs) => {
     const fetchOptions = {
       method: 'POST',
@@ -81,20 +84,19 @@ const userLogin = () => {
     };
     return await fetchJson(baseUrl + 'login', fetchOptions);
   };
-
   return {postLogin};
 };
 
 const useTag = () => {
   const getTag = async (tag) => {
     const tagResult = await fetchJson(baseUrl + 'tags/' + tag);
-    if (tagResult.lenght > 0) {
+    if (tagResult.length > 0) {
       return tagResult;
     } else {
-      throw new Error('No tags');
+      throw new Error('No results');
     }
   };
   return {getTag};
 };
 
-export {useMedia, useUser, userLogin, useTag};
+export {useMedia, useLogin, useUser, useTag};

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import {Container} from '@mui/material';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
@@ -9,22 +8,29 @@ import Login from './views/Login';
 import Logout from './views/Logout';
 import Profile from './views/Profile';
 import Single from './views/Single';
+import {themeOptions} from './theme/themeOptions';
+import {ThemeProvider, createTheme} from '@mui/material/styles';
+
+const theme = createTheme(themeOptions);
 
 const App = () => {
   return (
+    // eslint-disable-next-line no-undef
     <Router basename={process.env.PUBLIC_URL}>
-      <Container>
-        <MediaProvider>
-          <Nav />
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/single" element={<Single />} />
-            <Route path="/logout" element={<Logout />} />
-          </Routes>
-        </MediaProvider>
-      </Container>
+      <MediaProvider>
+        <ThemeProvider theme={theme}>
+          <Container maxWidth="lg">
+            <Nav />
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/single" element={<Single />} />
+              <Route path="/logout" element={<Logout />} />
+            </Routes>
+          </Container>
+        </ThemeProvider>
+      </MediaProvider>
     </Router>
   );
 };

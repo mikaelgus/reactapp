@@ -1,12 +1,14 @@
-/* eslint-disable no-unused-vars */
-import React from 'react';
+// eslint-disable-next-line no-unused-vars
 import PropTypes from 'prop-types';
+import {useUser} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
-import {getUsername, useUser} from '../hooks/ApiHooks';
-import {Button, TextField} from '@mui/material';
+import {Grid} from '@mui/material';
+import {Typography} from '@mui/material';
+import {TextField} from '@mui/material';
+import {Button} from '@mui/material';
 
 const RegisterForm = (props) => {
-  const startingValues = {
+  const alkuarvot = {
     username: '',
     password: '',
     email: '',
@@ -30,50 +32,60 @@ const RegisterForm = (props) => {
 
   const {inputs, handleInputChange, handleSubmit} = useForm(
     doRegister,
-    startingValues
+    alkuarvot
   );
   console.log(inputs);
+
   return (
-    <>
-      <div>Register</div>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          id="outlined-basic"
-          placeholder="username"
-          type="text"
-          name="username"
-          onChange={handleInputChange}
-          value={inputs.username}
-        />
-        <TextField
-          id="outlined-basic"
-          placeholder="password"
-          type="password"
-          name="password"
-          onChange={handleInputChange}
-          value={inputs.password}
-        />
-        <TextField
-          id="outlined-basic"
-          placeholder="email"
-          type="email"
-          name="email"
-          onChange={handleInputChange}
-          value={inputs.email}
-        />
-        <TextField
-          id="outlined-basic"
-          placeholder="full name"
-          type="text"
-          name="full_name"
-          onChange={handleInputChange}
-          value={inputs.full_name}
-        />
-        <Button variant="contained" type="submit" value="register">
-          REGISTER
-        </Button>
-      </form>
-    </>
+    <Grid container>
+      <Grid item xs={12}>
+        <Typography component="h1" variant="h2" gutterBottom>
+          Register
+        </Typography>
+      </Grid>
+
+      <Grid item xs={12}>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            fullWidth
+            placeholder="username"
+            label="username"
+            name="username"
+            onChange={handleInputChange}
+            value={inputs.username}
+          />
+          <TextField
+            fullWidth
+            label="password"
+            placeholder="password"
+            name="password"
+            type="password"
+            onChange={handleInputChange}
+            value={inputs.password}
+          />
+          <TextField
+            fullWidth
+            label="email"
+            placeholder="email"
+            name="email"
+            type="email"
+            onChange={handleInputChange}
+            value={inputs.email}
+          />
+          <TextField
+            fullWidth
+            label="full name"
+            placeholder="full name"
+            name="full_name"
+            onChange={handleInputChange}
+            value={inputs.full_name}
+          />
+          <Button fullWidth color="primary" type="submit" variant="contained">
+            Login
+          </Button>
+        </form>
+      </Grid>
+    </Grid>
   );
 };
 

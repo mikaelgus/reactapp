@@ -1,11 +1,24 @@
+import {Button} from '@mui/material';
+import {useState} from 'react';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 
 const Login = () => {
+  const [toggle, setToggle] = useState(true);
   return (
     <>
-      <LoginForm />
-      <RegisterForm />
+      {toggle ? <LoginForm /> : <RegisterForm />}
+      OR
+      <Button
+        fullWidth
+        color="primary"
+        variant="contained"
+        onClick={() => {
+          setToggle(!toggle);
+        }}
+      >
+        {toggle ? 'register' : 'login'}
+      </Button>
     </>
   );
 };

@@ -17,6 +17,14 @@ const RegisterForm = (props) => {
 
   const {postUser, getUsername} = useUser();
 
+  const doCheck = async () => {
+    try {
+      await getUsername(inputs.username);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   const doRegister = async () => {
     console.log('doRegister');
     try {
@@ -61,6 +69,7 @@ const RegisterForm = (props) => {
             name="password"
             type="password"
             onChange={handleInputChange}
+            onBlur={doCheck}
             value={inputs.password}
           />
           <TextField
@@ -81,7 +90,7 @@ const RegisterForm = (props) => {
             value={inputs.full_name}
           />
           <Button fullWidth color="primary" type="submit" variant="contained">
-            Login
+            Register
           </Button>
         </form>
       </Grid>

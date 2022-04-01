@@ -13,6 +13,7 @@ const RegisterForm = (props) => {
   const alkuarvot = {
     username: '',
     password: '',
+    confirm: '',
     email: '',
     full_name: '',
   };
@@ -20,8 +21,9 @@ const RegisterForm = (props) => {
   const validators = {
     username: ['required', 'minStringLength: 3', 'isAvailable'],
     password: ['required', 'minStringLength: 5'],
+    confirm: ['required', 'isPasswordMatch'],
     email: ['required', 'isEmail'],
-    full_name: ['!isEmpty', 'minStringLength: 3'],
+    // full_name: ['!isEmpty', 'minStringLength: 3'],
   };
 
   const errorMessages = {
@@ -31,8 +33,9 @@ const RegisterForm = (props) => {
       'user name not available',
     ],
     password: ['required field', 'minimun 5 character'],
+    confirm: ['password do not mach'],
     email: ['required field', 'email is not valid'],
-    full_name: ['!isEmpty', 'minimun 3 character'],
+    // full_name: ['!isEmpty', 'minimun 3 character'],
   };
 
   const {postUser, getUsername} = useUser();
@@ -42,6 +45,7 @@ const RegisterForm = (props) => {
     try {
       const checkUser = await getUsername(inputs.username);
       if (checkUser) {
+        delete inputs.confirm;
         const userData = await postUser(inputs);
         console.log(userData);
       }
@@ -63,7 +67,19 @@ const RegisterForm = (props) => {
         return true;
       }
     });
-  }, []);
+
+    ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+      if (value !== inputs.password) {
+        return false;
+      }
+      return true;
+      // return value === inputs.password ? true : false;
+    });
+
+    return () => {
+      ValidatorForm.addValidationRule('isAvailable'); // optional
+    };
+  }, [inputs]);
 
   return (
     <Grid container>
@@ -95,6 +111,17 @@ const RegisterForm = (props) => {
             value={inputs.password}
             validators={validators.password}
             errorMessages={errorMessages.password}
+          />
+          <TextValidator
+            fullWidth
+            label="re-type password"
+            placeholder="confirm"
+            name="confirm"
+            type="password"
+            onChange={handleInputChange}
+            value={inputs.confirm}
+            validators={validators.confirm}
+            errorMessages={errorMessages.confirm}
           />
           <TextValidator
             fullWidth

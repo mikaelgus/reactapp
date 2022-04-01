@@ -52,7 +52,7 @@ const Profile = () => {
                     imgProps={{
                       alt: `${user.username}'s profile image`,
                     }}
-                    sx={{mx: 'auto', width: '100%', height: '30vh'}}
+                    sx={{width: '100%', height: '30vh'}}
                   />
                 </ListItemAvatar>
               </ListItem>

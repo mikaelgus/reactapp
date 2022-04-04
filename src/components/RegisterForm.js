@@ -9,7 +9,7 @@ import {ValidatorForm} from 'react-material-ui-form-validator';
 import {TextValidator} from 'react-material-ui-form-validator';
 import {useEffect} from 'react';
 
-const RegisterForm = (props) => {
+const RegisterForm = ({setToggle}) => {
   const alkuarvot = {
     username: '',
     password: '',
@@ -23,7 +23,7 @@ const RegisterForm = (props) => {
     password: ['required', 'minStringLength: 5'],
     confirm: ['required', 'isPasswordMatch'],
     email: ['required', 'isEmail'],
-    // full_name: ['!isEmpty', 'minStringLength: 3'],
+    full_name: ['minStringLength: 3'],
   };
 
   const errorMessages = {
@@ -35,7 +35,7 @@ const RegisterForm = (props) => {
     password: ['required field', 'minimun 5 character'],
     confirm: ['password do not mach'],
     email: ['required field', 'email is not valid'],
-    // full_name: ['!isEmpty', 'minimun 3 character'],
+    full_name: ['minimun 3 character'],
   };
 
   const {postUser, getUsername} = useUser();
@@ -43,13 +43,9 @@ const RegisterForm = (props) => {
   const doRegister = async () => {
     console.log('doRegister');
     try {
-      const checkUser = await getUsername(inputs.username);
-      if (checkUser) {
-        delete inputs.confirm;
-        const userData = await postUser(inputs);
-        console.log(userData);
-        // send to login.js toggle to open login
-      }
+      delete inputs.confirm;
+      const userData = await postUser(inputs);
+      userData && setToggle(true);
     } catch (err) {
       alert(err.message);
     }
@@ -116,7 +112,7 @@ const RegisterForm = (props) => {
           <TextValidator
             fullWidth
             label="re-type password"
-            placeholder="confirm"
+            placeholder="re-type password"
             name="confirm"
             type="password"
             onChange={handleInputChange}
@@ -154,6 +150,8 @@ const RegisterForm = (props) => {
   );
 };
 
-RegisterForm.propTypes = {};
+RegisterForm.propTypes = {
+  setToggle: PropTypes.func,
+};
 
 export default RegisterForm;

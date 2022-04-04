@@ -12,7 +12,7 @@ const useForm = (callback, initSate) => {
     event.persist();
     setInputs((inputs) => ({
       ...inputs,
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value, // event.target.files[0]
     }));
   };
   return {

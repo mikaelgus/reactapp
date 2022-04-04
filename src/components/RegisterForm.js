@@ -48,6 +48,7 @@ const RegisterForm = (props) => {
         delete inputs.confirm;
         const userData = await postUser(inputs);
         console.log(userData);
+        // send to login.js toggle to open login
       }
     } catch (err) {
       alert(err.message);

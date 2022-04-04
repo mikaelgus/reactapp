@@ -1,16 +1,31 @@
-import {Button, Grid, Typography} from '@mui/material';
+import {Button, CircularProgress, Grid, Typography} from '@mui/material';
+import {useMedia} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
+import {useNavigate} from 'react-router-dom';
+import {useEffect, useState} from 'react';
 
-const UploadForm = () => {
+const Upload = () => {
+  const [preview, setPreview] = useState('logo192.png');
   const alkuarvot = {
     title: '',
     descrition: '',
-    file: '',
   };
+
+  const {postMedia, loading} = useMedia();
+  const navigate = useNavigate();
 
   const doUpload = async () => {
     try {
       console.log('doUpload');
+      const token = localStorage.getItem('token');
+      const formData = new FormData();
+      formData.append('title', inputs.title);
+      formData.append('description', inputs.description);
+      formData.append('file', inputs.file);
+      const mediaData = await postMedia(formData, token);
+      if (confirm(mediaData.message)) {
+        navigate('/home');
+      }
     } catch (err) {
       alert(err.message);
     }
@@ -21,11 +36,21 @@ const UploadForm = () => {
     alkuarvot
   );
 
+  useEffect(() => {
+    if (inputs.file) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        setPreview(reader.result);
+      });
+      reader.readAsDataURL(inputs.file);
+    }
+  }, [inputs.file]);
+
   return (
     <Grid container>
       <Grid item xs={12}>
         <Typography component="h1" variant="h2" gutterBottom>
-          Login
+          Upload a file
         </Typography>
       </Grid>
 
@@ -43,15 +68,25 @@ const UploadForm = () => {
             onChange={handleInputChange}
             value={inputs.description}
           ></textarea>
-          <input type="file" name="file" accept="image/*, video/*, audio/*" />
-          <Button fullWidth color="primary" type="submit" variant="contained">
-            Login
-          </Button>
+
+          <input
+            type="file"
+            name="file"
+            accept="image/*, video/*, audio/*"
+            onChange={handleInputChange}
+          />
+          <img src={preview} alt="preview" />
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <Button fullWidth color="primary" type="submit" variant="contained">
+              Upload
+            </Button>
+          )}
         </form>
       </Grid>
     </Grid>
   );
 };
-UploadForm.protoTypes = {};
 
-export default UploadForm;
+export default Upload;

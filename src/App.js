@@ -10,7 +10,7 @@ import Profile from './views/Profile';
 import Single from './views/Single';
 import {themeOptions} from './theme/themeOptions';
 import {ThemeProvider, createTheme} from '@mui/material/styles';
-import {Upload} from '@mui/icons-material';
+import Upload from './views/Upload';
 
 const theme = createTheme(themeOptions);
 

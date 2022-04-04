@@ -1,4 +1,3 @@
-// TODO: add necessary imports
 import {useEffect, useState} from 'react';
 import {baseUrl} from '../utils/variables';
 
@@ -19,8 +18,10 @@ const fetchJson = async (url, options = {}) => {
 
 const useMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
+  const [loading, setLoading] = useState(false);
   const getMedia = async () => {
     try {
+      setLoading(true);
       const media = await fetchJson(baseUrl + 'media');
       const allFiles = await Promise.all(
         media.map(async (file) => {
@@ -30,6 +31,8 @@ const useMedia = () => {
       setMediaArray(allFiles);
     } catch (err) {
       alert(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -37,7 +40,23 @@ const useMedia = () => {
     getMedia();
   }, []);
 
-  return {mediaArray};
+  const postMedia = async (formdata, token) => {
+    try {
+      setLoading(true);
+      const fetchOptions = {
+        method: 'POST',
+        headers: {
+          'x-access-token': token,
+        },
+        body: formdata,
+      };
+      return await fetchJson(baseUrl + 'media', fetchOptions);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {mediaArray, postMedia, loading};
 };
 
 const useUser = () => {

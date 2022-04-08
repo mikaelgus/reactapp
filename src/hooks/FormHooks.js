@@ -9,7 +9,8 @@ const useForm = (callback, initSate) => {
     callback();
   };
   const handleInputChange = (event) => {
-    event.persist();
+    event.persist && event.persist();
+
     setInputs((inputs) => ({
       ...inputs,
       [event.target.name]: event.target.file

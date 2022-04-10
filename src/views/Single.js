@@ -9,8 +9,10 @@ import {
   ListItem,
   ListItemAvatar,
   Avatar,
+  Button,
 } from '@mui/material';
 import {safeParseJson} from '../utils/functions';
+import {backButton} from '../components/BackButton';
 
 const Single = () => {
   const location = useLocation();
@@ -24,7 +26,10 @@ const Single = () => {
   return (
     <>
       <Typography component="h1" variant="h2">
-        {file.title}
+        {file.title}{' '}
+        <Button onClick={backButton} color="primary" variant="contained">
+          Back
+        </Button>
       </Typography>
       <Card>
         <CardMedia

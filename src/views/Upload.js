@@ -12,6 +12,7 @@ import {useState, useEffect} from 'react';
 import {appID} from '../utils/variables';
 import {ValidatorForm} from 'react-material-ui-form-validator';
 import {TextValidator} from 'react-material-ui-form-validator';
+import {backButton} from '../components/BackButton';
 
 const Upload = () => {
   const [preview, setPreview] = useState('logo192.png');
@@ -24,6 +25,18 @@ const Upload = () => {
     contrast: 100,
     saturate: 100,
     sepia: 0,
+  };
+
+  const validators = {
+    title: ['required', 'minStringLength: 2'],
+    // description: ['minStringLength: 2'],
+    file: ['isFile', 'maxFileSize: 50000000'],
+  };
+
+  const errorMessages = {
+    title: ['required field', 'minimun 2 character'],
+    // description: ['minimun 2 character'],
+    file: ['file is not valid', 'max file size 50 MB'],
   };
 
   const {postMedia, loading} = useMedia();
@@ -78,12 +91,18 @@ const Upload = () => {
 
   console.log(inputs, filterInputs);
 
+  // upload button hidden if no tittle and file
+  const allFilled = (inputs.title != '') & (inputs.file != undefined);
+
   return (
     <>
       <Grid container>
         <Grid item xs={12}>
           <Typography component="h1" variant="h2" gutterBottom>
-            Upload
+            Upload{' '}
+            <Button onClick={backButton} color="primary" variant="contained">
+              Back
+            </Button>
           </Typography>
         </Grid>
 
@@ -95,6 +114,8 @@ const Upload = () => {
               name="title"
               onChange={handleInputChange}
               value={inputs.title}
+              validators={validators.title}
+              errorMessages={errorMessages.title}
             />
             <TextValidator
               fullWidth
@@ -102,19 +123,24 @@ const Upload = () => {
               name="description"
               onChange={handleInputChange}
               value={inputs.description}
-            ></TextValidator>
+              validators={validators.description}
+              errorMessages={errorMessages.description}
+            />
 
             <TextValidator
               type="file"
               name="file"
               accept="image/*, video/*, audio/*"
               onChange={handleInputChange}
+              validators={validators.file}
+              errorMessages={errorMessages.file}
             />
 
             {loading ? (
               <CircularProgress />
             ) : (
               <Button
+                disabled={!allFilled}
                 fullWidth
                 color="primary"
                 type="submit"

@@ -1,9 +1,16 @@
 import {ImageListItem, ImageListItemBar} from '@mui/material';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {safeParseJson} from '../utils/functions';
 import {mediaUrl} from '../utils/variables';
 
 const MediaRow = ({file}) => {
+  const {description, filters} = safeParseJson(file.description) || {
+    description: file.description,
+    filters: {},
+  };
+  console.log('inside dsc', description);
+  console.log(filters);
   return (
     <ImageListItem
       key={file.file_id}
@@ -16,7 +23,7 @@ const MediaRow = ({file}) => {
         alt={file.title}
         loading="lazy"
       />
-      <ImageListItemBar title={file.title} subtitle={file.description} />
+      <ImageListItemBar title={file.title} subtitle={description} />
     </ImageListItem>
   );
 };

@@ -4,6 +4,7 @@ import {useTag} from '../hooks/ApiHooks';
 import {mediaUrl} from '../utils/variables';
 import {
   Avatar,
+  Button,
   Card,
   CardContent,
   List,
@@ -14,6 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import {AccountCircle, Badge, ContactMail} from '@mui/icons-material';
+import {backButton} from '../components/BackButton';
 
 const Profile = () => {
   const [user] = useContext(MediaContext);
@@ -38,7 +40,10 @@ const Profile = () => {
   return (
     <>
       <Typography component="h1" variant="h2">
-        Profile
+        Profile{' '}
+        <Button onClick={backButton} color="primary" variant="contained">
+          Back
+        </Button>
       </Typography>
       {user && (
         <Card>

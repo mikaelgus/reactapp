@@ -1,4 +1,5 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
+import {MediaContext} from '../contexts/MediaContext';
 import {appID, baseUrl} from '../utils/variables';
 
 const fetchJson = async (url, options = {}) => {
@@ -17,6 +18,7 @@ const fetchJson = async (url, options = {}) => {
 };
 
 const useMedia = (showAllFiles, userId) => {
+  const {update} = useContext(MediaContext);
   const [mediaArray, setMediaArray] = useState([]);
   const [loading, setLoading] = useState(false);
   const getMedia = async () => {
@@ -44,7 +46,7 @@ const useMedia = (showAllFiles, userId) => {
 
   useEffect(() => {
     getMedia();
-  }, [userId]);
+  }, [userId, update]);
 
   const postMedia = async (formdata, token) => {
     try {
@@ -62,7 +64,17 @@ const useMedia = (showAllFiles, userId) => {
     }
   };
 
-  return {mediaArray, postMedia, loading};
+  const deleteMedia = async (fileId, token) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await fetchJson(baseUrl + 'media/' + fileId, fetchOptions);
+  };
+
+  return {mediaArray, postMedia, deleteMedia, loading};
 };
 
 const useUser = () => {

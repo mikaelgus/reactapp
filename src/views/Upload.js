@@ -29,14 +29,14 @@ const Upload = () => {
 
   const validators = {
     title: ['required', 'minStringLength: 2'],
-    // description: ['minStringLength: 2'],
-    file: ['isFile', 'maxFileSize: 50000000'],
+    description: ['minStringLength: 2'],
+    file: ['isFile', 'maxFileSize: 10000000'],
   };
 
   const errorMessages = {
     title: ['required field', 'minimun 2 character'],
-    // description: ['minimun 2 character'],
-    file: ['file is not valid', 'max file size 50 MB'],
+    description: ['minimun 2 character'],
+    file: ['file is not valid', 'max file size 10 MB'],
   };
 
   const {postMedia, loading} = useMedia();

@@ -16,18 +16,23 @@ const fetchJson = async (url, options = {}) => {
   }
 };
 
-const useMedia = () => {
+const useMedia = (showAllFiles, userId) => {
   const [mediaArray, setMediaArray] = useState([]);
   const [loading, setLoading] = useState(false);
   const getMedia = async () => {
     try {
       setLoading(true);
       const media = await useTag().getTag(appID);
-      const allFiles = await Promise.all(
+      let allFiles = await Promise.all(
         media.map(async (file) => {
           return await fetchJson(`${baseUrl}media/${file.file_id}`);
         })
       );
+      // jos showAllFiles false filteröi kirjautuneen käyytäjän tiedostot
+      if (!showAllFiles) {
+        allFiles = allFiles.filter((file) => file.user_id === userId);
+      }
+
       setMediaArray(allFiles);
     } catch (err) {
       alert(err.message);
@@ -38,7 +43,7 @@ const useMedia = () => {
 
   useEffect(() => {
     getMedia();
-  }, []);
+  }, [userId]);
 
   const postMedia = async (formdata, token) => {
     try {
@@ -74,6 +79,15 @@ const useUser = () => {
     return checkUser.available;
   };
 
+  const getUserById = async (userId, token) => {
+    const fetchOptions = {
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await fetchJson(baseUrl + 'users/', fetchOptions);
+  };
+
   const postUser = async (inputs) => {
     const fetchOptions = {
       method: 'POST',
@@ -85,7 +99,7 @@ const useUser = () => {
     return await fetchJson(baseUrl + 'users', fetchOptions);
   };
 
-  return {getUser, postUser, getUsername};
+  return {getUser, postUser, getUsername, getUserById};
 };
 
 const useLogin = () => {

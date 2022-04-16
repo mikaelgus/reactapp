@@ -12,7 +12,7 @@ import {useState, useEffect} from 'react';
 import {appID} from '../utils/variables';
 import {ValidatorForm} from 'react-material-ui-form-validator';
 import {TextValidator} from 'react-material-ui-form-validator';
-import {backButton} from '../components/BackButton';
+import {BackButton} from '../components/BackButton';
 
 const Upload = () => {
   const [preview, setPreview] = useState('logo192.png');
@@ -99,10 +99,7 @@ const Upload = () => {
       <Grid container>
         <Grid item xs={12}>
           <Typography component="h1" variant="h2" gutterBottom>
-            Upload{' '}
-            <Button onClick={backButton} color="primary" variant="contained">
-              Back
-            </Button>
+            Upload <BackButton />
           </Typography>
         </Grid>
 

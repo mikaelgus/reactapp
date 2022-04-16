@@ -9,10 +9,9 @@ import {
   ListItem,
   ListItemAvatar,
   Avatar,
-  Button,
 } from '@mui/material';
 import {safeParseJson} from '../utils/functions';
-import {backButton} from '../components/BackButton';
+import {BackButton} from '../components/BackButton';
 import {useEffect, useState} from 'react';
 import {useTag} from '../hooks/ApiHooks';
 
@@ -52,10 +51,7 @@ const Single = () => {
   return (
     <>
       <Typography component="h1" variant="h2">
-        {file.title}{' '}
-        <Button onClick={backButton} color="primary" variant="contained">
-          Back
-        </Button>
+        {file.title} <BackButton />
       </Typography>
       <Card>
         <CardMedia

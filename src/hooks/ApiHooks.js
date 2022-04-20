@@ -25,7 +25,7 @@ const useMedia = (showAllFiles, userId) => {
     try {
       setLoading(true);
       let media = await useTag().getTag(appID);
-      // jos showAllFiles false filteröi kirjautuneen käyytäjän tiedostot meia taulukkoon
+      // jos showAllFiles false filteröi kirjautuneen käyytäjän tiedostot media taulukkoon
       if (!showAllFiles) {
         media = media.filter((file) => file.user_id === userId);
       }
@@ -74,7 +74,24 @@ const useMedia = (showAllFiles, userId) => {
     return await fetchJson(baseUrl + 'media/' + fileId, fetchOptions);
   };
 
-  return {mediaArray, postMedia, deleteMedia, loading};
+  const putMedia = async (fileId, data, token) => {
+    try {
+      setLoading(true);
+      const fetchOptions = {
+        method: 'PUT',
+        headers: {
+          'x-access-token': token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      };
+      return await fetchJson(baseUrl + 'media/' + fileId, fetchOptions);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {mediaArray, postMedia, deleteMedia, putMedia, loading};
 };
 
 const useUser = () => {

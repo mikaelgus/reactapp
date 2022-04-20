@@ -17,7 +17,7 @@ import {AccountCircle, Badge, ContactMail} from '@mui/icons-material';
 import {BackButton} from '../components/BackButton';
 
 const Profile = () => {
-  const [user] = useContext(MediaContext);
+  const {user} = useContext(MediaContext);
   const [avatar, setAvatar] = useState({
     filename: 'https://placekitten.com/320',
   });
@@ -39,8 +39,9 @@ const Profile = () => {
   return (
     <>
       <Typography component="h1" variant="h2">
-        Profile <BackButton />
+        Profile
       </Typography>
+      <BackButton />
       {user && (
         <Card>
           <CardContent>

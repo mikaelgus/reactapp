@@ -33,23 +33,39 @@ const MediaRow = ({file, userId, deleteMedia}) => {
   console.log('inside dsc', description);
   console.log(filters);
   return (
-    <ImageListItem
-      key={file.file_id}
-      component={Link}
-      to={'/single'}
-      state={{file}}
-    >
+    <ImageListItem key={file.file_id}>
       <img
         src={file.thumbnails ? mediaUrl + file.thumbnails.w320 : 'logo512.png'}
         alt={file.title}
         loading="lazy"
+        style={{
+          filter: `brightness(${filters.brightness}%)
+        contrast(${filters.contrast}%)
+        saturate(${filters.saturate}%)
+        sepia(${filters.sepia}%)`,
+        }}
       />
       <ImageListItemBar
         actionIcon={
           <>
+            <Button
+              variant="contained"
+              component={Link}
+              to={'/single'}
+              state={{file}}
+            >
+              View
+            </Button>
             {userId == file.user_id && (
               <>
-                <Button variant="contained">Edit</Button>
+                <Button
+                  variant="contained"
+                  component={Link}
+                  to={'/modify'}
+                  state={{file}}
+                >
+                  Edit
+                </Button>
                 <Button variant="contained" onClick={doDelete}>
                   Delete
                 </Button>
